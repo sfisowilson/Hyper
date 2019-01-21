@@ -1,0 +1,51 @@
+@font-face {
+    font-family: 'icomoon';
+    src:  url('../../../assets/icomoon/fonts/icomoon.eot?al6w0l');
+    src:  url('../../../assets/icomoon/fonts/icomoon.eot?al6w0l#iefix') format('embedded-opentype'),
+      url('../../../assets/icomoon/fonts/icomoon.ttf?al6w0l') format('truetype'),
+      url('../../../assets/icomoon/fonts/icomoon.woff?al6w0l') format('woff'),
+      url('../../../assets/icomoon/fonts/icomoon.svg?al6w0l#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+  
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .icon-42:before {
+    content: "\e900";
+    color: #000;
+  }
+
+.registerForm {
+    background-color: white;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.auth-icons {
+  font-size: 3em;
+  color: black;
+  cursor: pointer;
+}
+.redColor {
+color:tomato !important;
+}
+
+@media(min-width: 768px) {
+    .field-label-responsive {
+      padding-top: .5rem;
+      text-align: right;
+    }
+  }
+/* reactive forms in angular google this */

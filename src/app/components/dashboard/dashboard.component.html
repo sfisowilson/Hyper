@@ -1,0 +1,215 @@
+<app-layout>
+	<div class="container">
+		<form [formGroup]='searchForm' (ngSubmit)="onSubmit()" class="form-horizontal" role="form">
+			<div id="main-search-fields pb-2 mb-4">
+				<div class="row py-4">
+					<div class="col-12 mb-2">
+						<input type="search" formControlName="searchBar" class="form-control" placeholder="Search for torrents...">
+					</div>
+
+					<div class="col-6 col-sm-3 form-group">
+						<label for="quality">Quality:</label>
+						<select formControlName="quality" class="form-control" id="quality">
+							<option value="all">All</option>
+							<option value="720p">720p</option>
+							<option value="1080p">1080p</option>
+							<option value="3D">3D</option>
+						</select>
+					</div>
+						<div class="col-6 col-sm-3 form-group">
+							<label for="genre">Genre:</label>
+							<select formControlName="genre" class="form-control" id="genre">
+								<option value="all">All</option>
+								<option value="action">Action</option>
+								<option value="adventure">Adventure</option>
+								<option value="animation">Animation</option>
+								<option value="biography">Biography</option>
+								<option value="comedy">Comedy</option>
+								<option value="crime">Crime</option>
+								<option value="documentary">Documentary</option>
+								<option value="drama">Drama</option>
+								<option value="family">Family</option>
+								<option value="fantasy">Fantasy</option>
+								<option value="film-noir">Film-Noir</option>
+								<option value="game-show">Game-Show</option>
+								<option value="history">History</option>
+								<option value="horror">Horror</option>
+								<option value="music">Music</option>
+								<option value="musical">Musical</option>
+								<option value="mystery">Mystery</option>
+								<option value="news">News</option>
+								<option value="reality-tv">Reality-TV</option>
+								<option value="romance">Romance</option>
+								<option value="sci-fi">Sci-Fi</option>
+								<option value="sport">Sport</option>
+								<option value="talk-show">Talk-Show</option>
+								<option value="thriller">Thriller</option>
+								<option value="war">War</option>
+								<option value="western">Western</option>
+							</select>
+						</div>
+						<div class="col-6 col-sm-3 form-group">
+							<label for="rating">Rating:</label>
+							<select formControlName="rating" class="form-control" id="rating">
+								<option value="0">All</option>
+								<option value="9">9+</option>
+								<option value="8">8+</option>
+								<option value="7">7+</option>
+								<option value="6">6+</option>
+								<option value="5">5+</option>
+								<option value="4">4+</option>
+								<option value="3">3+</option>
+								<option value="2">2+</option>
+								<option value="1">1+</option>
+							</select>
+						</div>
+						<div class="col-6 col-sm-3 form-group">
+						<label for="order_by">Order By:</label>
+						<select formControlName="order" class="form-control" id="order_by">
+							<option value="latest">Latest</option>
+							<option value="oldest">Oldest</option>
+							<option value="seeds">Seeds</option>
+							<option value="peers">Peers</option>
+							<option value="year">Year</option>
+							<option value="rating">Rating</option>
+							<option value="likes">Likes</option>
+							<option value="alphabetical">Alphabetical</option>
+							<option value="downloads">Downloads</option>
+						</select>
+						</div>
+						</div>
+					<div class="ml-auto col-md-3 col-12">
+						<button class="btn btn-success btn-block"><i class="fa fa-search"></i> search</button>
+					</div>
+				</div>
+		</form>
+		<div class="row py-4">
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="1"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/black.jpeg)"></div>
+				<div class="info text-center">
+					<strong>Black Panther</strong>
+					<p class="year">2018</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="2"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/grimsby.jpg)"></div>
+				<div class="info text-center">
+					<strong>Grimsby</strong>
+					<p class="year">2016</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="3"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/ant.jpg)"></div>
+				<div class="info text-center">
+					<strong>Ant Man</strong>
+					<p class="year">2017</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="1"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/black.jpeg)"></div>
+				<div class="info text-center">
+					<strong>Black Panther</strong>
+					<p class="year">2018</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="2"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/grimsby.jpg)"></div>
+				<div class="info text-center">
+					<strong>Grimsby</strong>
+					<p class="year">2016</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="3"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/ant.jpg)"></div>
+				<div class="info text-center">
+					<strong>Ant Man</strong>
+					<p class="year">2017</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="1"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/black.jpeg)"></div>
+				<div class="info text-center">
+					<strong>Black Panther</strong>
+					<p class="year">2018</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="2"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/grimsby.jpg)"></div>
+				<div class="info text-center">
+					<strong>Grimsby</strong>
+					<p class="year">2016</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="3"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/ant.jpg)"></div>
+				<div class="info text-center">
+					<strong>Ant Man</strong>
+					<p class="year">2017</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="1"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/black.jpeg)"></div>
+				<div class="info text-center">
+					<strong>Black Panther</strong>
+					<p class="year">2018</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="2"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/grimsby.jpg)"></div>
+				<div class="info text-center">
+					<strong>Grimsby</strong>
+					<p class="year">2016</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="3"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/ant.jpg)"></div>
+				<div class="info text-center">
+					<strong>Ant Man</strong>
+					<p class="year">2017</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="1"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/black.jpeg)"></div>
+				<div class="info text-center">
+					<strong>Black Panther</strong>
+					<p class="year">2018</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="2"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/grimsby.jpg)"></div>
+				<div class="info text-center">
+					<strong>Grimsby</strong>
+					<p class="year">2016</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="3"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/ant.jpg)"></div>
+				<div class="info text-center">
+					<strong>Ant Man</strong>
+					<p class="year">2017</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="1"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/black.jpeg)"></div>
+				<div class="info text-center">
+					<strong>Black Panther</strong>
+					<p class="year">2018</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="2"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/grimsby.jpg)"></div>
+				<div class="info text-center">
+					<strong>Grimsby</strong>
+					<p class="year">2016</p>
+				</div>
+			</div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="3"> <!-- replace 1 with the movie id -->
+				<div class="imageDivBackground" style="background-image: url(../../../assets/images/ant.jpg)"></div>
+				<div class="info text-center">
+					<strong>Ant Man</strong>
+					<p class="year">2017</p>
+				</div>
+			</div>			
+		</div>
+	</div>
+</app-layout>

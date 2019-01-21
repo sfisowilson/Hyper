@@ -1,0 +1,67 @@
+<app-layout>    
+</app-layout>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <h3>Please Register</h3>
+                    <form [formGroup]='registerForm' (ngSubmit)="onSubmit()" class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" formControlName="first" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.first.errors }" />
+                            <div *ngIf="submitted && f.first.errors" class="invalid-feedback">
+                                <div *ngIf="f.first.errors.required">First Name is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" formControlName="last" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.last.errors }" />
+                            <div *ngIf="submitted && f.last.errors" class="invalid-feedback">
+                                <div *ngIf="f.last.errors.required">Last Name is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" formControlName="uid" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.uid.errors }" />
+                                <div *ngIf="submitted && f.uid.errors" class="invalid-feedback">
+                                    <div *ngIf="f.uid.errors.required">Username is required</div>
+                                    <div *ngIf="f.uid.errors.minlength">Username must be at least 6 characters</div>
+                                </div>
+                            </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                <div *ngIf="f.email.errors.required">Email is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" formControlName="pwd" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pwd.errors }" />
+                            <div *ngIf="submitted && f.pwd.errors" class="invalid-feedback">
+                                <div *ngIf="f.pwd.errors.required">Password is required</div>
+                                <div *ngIf="f.pwd.errors.minlength">Password must be at least 6 characters</div>
+                                <div *ngIf="f.pwd.errors.pattern">Password must contain each of these (Upper-case letter(s), Number(s), Lower-case letter(s))</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input type="password" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+                            <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                                <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                                <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary">Sign in</button>
+                        </div>
+                    </form>
+                    <div class="col-12">
+                        <div class="d-flex justify-content-center">
+                            <div class="p-4 fa fa-google auth-icons redColor" (click)="googleStrategy()"></div>
+                            <div class="p-4 icon-42 auth-icons " (click)="otherStrategy()"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
