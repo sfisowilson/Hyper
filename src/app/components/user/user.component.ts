@@ -54,7 +54,7 @@ export class UserComponent implements OnInit {
       console.log(httpOptions);
       console.log(this.data);
       console.log(this.data);
-    this.http.post<any>('http://10.204.0.126:3000/signup/send', this.data, httpOptions).subscribe(res => {
+    this.http.post<any>('http://localhost:5200/test', this.data, httpOptions).subscribe(res => {
       console.log(res);
       this.response = res;
       if (this.response.status === 200) {
@@ -72,7 +72,6 @@ export class UserComponent implements OnInit {
   otherStrategy(): void {
     window.location.href = 'http://10.204.0.126:3000/auth/42/redirect';
   }
-
 
 }
 // 10.204.0.126:3000/signup/send

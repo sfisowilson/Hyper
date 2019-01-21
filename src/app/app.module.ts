@@ -46,7 +46,7 @@ import { SingleviewComponent } from './components/singleview/singleview.componen
           { path : '', component : UserComponent },
           // /sifiso/login
           { path : 'login', component : LoginComponent },
-          { path : 'singleview', component : SingleviewComponent },
+          { path : 'singleview/:id', component : SingleviewComponent },
           { path : 'dashboard', component : DashboardComponent }
         ] },
     { path : 'stream', component : StreamComponent },
