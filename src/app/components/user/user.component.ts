@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MustMatch } from '../../helpers/mustMatch.validator';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -36,6 +36,7 @@ export class UserComponent implements OnInit {
       validator: MustMatch('pwd', 'confirmPassword')
     });
   }
+  
   onSubmit(): void {
     this.submitted = true;
     console.log(this.registerForm.value);
@@ -45,7 +46,16 @@ export class UserComponent implements OnInit {
     this.data = this.registerForm.value;
     this.data.confirmPassword = undefined;
     console.log(this.data);
-    this.http.post('http://localhost:5200/test', this.data).subscribe((res) => {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    }
+      console.log(httpOptions);
+      console.log(this.data);
+      console.log(this.data);
+    this.http.post<any>('http://10.204.0.126:3000/signup/send', this.data, httpOptions).subscribe(res => {
+      console.log(res);
       this.response = res;
       if (this.response.status === 200) {
         console.log(this.response.status);
@@ -57,10 +67,10 @@ export class UserComponent implements OnInit {
   }
 
   googleStrategy(): void {
-    alert('google');
+    window.location.href = 'http://10.204.0.126:3000/auth/google/redirect';
   }
   otherStrategy(): void {
-    alert('42');
+    window.location.href = 'http://10.204.0.126:3000/auth/42/redirect';
   }
 
 

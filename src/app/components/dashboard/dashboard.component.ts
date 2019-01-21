@@ -11,12 +11,19 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
   searchForm: FormGroup;
   submitted: boolean;
+  movieList: any;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) { }
 
   get f() { return this.searchForm.controls; }
 
   ngOnInit() {
+      this.http.get<any>('https://yts.am/api/v2/list_movies.json').subscribe((res) => {
+        this.movieList = res.data.movies;
+        console.log(this.movieList);
+      });
+
+
     this.submitted = false;
     this.searchForm = this.formBuilder.group({
       searchBar: [''],

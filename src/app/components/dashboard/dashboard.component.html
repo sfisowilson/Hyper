@@ -84,132 +84,14 @@
 				</div>
 		</form>
 		<div class="row py-4">
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="1"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/black.jpeg)"></div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="1" *ngFor="let oneMovie of movieList"> 
+				<div class="imageDivBackground"  [style.background-image]="'url(' + oneMovie.large_cover_image + ')'"></div>
+				
 				<div class="info text-center">
-					<strong>Black Panther</strong>
-					<p class="year">2018</p>
+					<strong>{{ oneMovie.title }}</strong>
+					<p class="year">{{ oneMovie.year }}</p>
 				</div>
 			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="2"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/grimsby.jpg)"></div>
-				<div class="info text-center">
-					<strong>Grimsby</strong>
-					<p class="year">2016</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="3"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/ant.jpg)"></div>
-				<div class="info text-center">
-					<strong>Ant Man</strong>
-					<p class="year">2017</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="1"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/black.jpeg)"></div>
-				<div class="info text-center">
-					<strong>Black Panther</strong>
-					<p class="year">2018</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="2"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/grimsby.jpg)"></div>
-				<div class="info text-center">
-					<strong>Grimsby</strong>
-					<p class="year">2016</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="3"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/ant.jpg)"></div>
-				<div class="info text-center">
-					<strong>Ant Man</strong>
-					<p class="year">2017</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="1"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/black.jpeg)"></div>
-				<div class="info text-center">
-					<strong>Black Panther</strong>
-					<p class="year">2018</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="2"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/grimsby.jpg)"></div>
-				<div class="info text-center">
-					<strong>Grimsby</strong>
-					<p class="year">2016</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="3"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/ant.jpg)"></div>
-				<div class="info text-center">
-					<strong>Ant Man</strong>
-					<p class="year">2017</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="1"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/black.jpeg)"></div>
-				<div class="info text-center">
-					<strong>Black Panther</strong>
-					<p class="year">2018</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="2"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/grimsby.jpg)"></div>
-				<div class="info text-center">
-					<strong>Grimsby</strong>
-					<p class="year">2016</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="3"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/ant.jpg)"></div>
-				<div class="info text-center">
-					<strong>Ant Man</strong>
-					<p class="year">2017</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="1"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/black.jpeg)"></div>
-				<div class="info text-center">
-					<strong>Black Panther</strong>
-					<p class="year">2018</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="2"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/grimsby.jpg)"></div>
-				<div class="info text-center">
-					<strong>Grimsby</strong>
-					<p class="year">2016</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="3"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/ant.jpg)"></div>
-				<div class="info text-center">
-					<strong>Ant Man</strong>
-					<p class="year">2017</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="1"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/black.jpeg)"></div>
-				<div class="info text-center">
-					<strong>Black Panther</strong>
-					<p class="year">2018</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="2"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/grimsby.jpg)"></div>
-				<div class="info text-center">
-					<strong>Grimsby</strong>
-					<p class="year">2016</p>
-				</div>
-			</div>
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="3"> <!-- replace 1 with the movie id -->
-				<div class="imageDivBackground" style="background-image: url(../../../assets/images/ant.jpg)"></div>
-				<div class="info text-center">
-					<strong>Ant Man</strong>
-					<p class="year">2017</p>
-				</div>
-			</div>			
 		</div>
 	</div>
 </app-layout>
