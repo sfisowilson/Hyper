@@ -54,4 +54,8 @@ export class DashboardComponent implements OnInit {
     // });
   }
 
+  singleMovie( id: number ): void {
+    this.router.navigate(['singleview', id ]);
+  }
+
 }

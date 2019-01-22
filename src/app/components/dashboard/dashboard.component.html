@@ -84,8 +84,8 @@
 				</div>
 		</form>
 		<div class="row py-4">
-			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" data-movie="1" *ngFor="let oneMovie of movieList"> 
-				<div class="imageDivBackground"  [style.background-image]="'url(' + oneMovie.large_cover_image + ')'"></div>
+			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" *ngFor="let oneMovie of movieList"> 
+				<div class="imageDivBackground" attr.data-movieId="{{ oneMovie.id }}" (click)="singleMovie(oneMovie.id)" [style.background-image]="'url(' + oneMovie.large_cover_image + ')'"></div>
 				
 				<div class="info text-center">
 					<strong>{{ oneMovie.title }}</strong>

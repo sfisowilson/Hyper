@@ -48,7 +48,7 @@ import { ProfileComponent } from './components/profile/profile.component';
           { path : '', component : UserComponent },
           // /sifiso/login
           { path : 'login', component : LoginComponent },
-          { path : 'singleview', component : SingleviewComponent },
+          { path : 'singleview/:id', component : SingleviewComponent },
           { path : 'dashboard', component : DashboardComponent }
         ] },
     { path : 'stream', component : StreamComponent },

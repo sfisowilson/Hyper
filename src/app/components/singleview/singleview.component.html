@@ -5,11 +5,13 @@
             <div class="col-6 col-md-4">
                 <div class="imageDivBackground" style="background-image: url(../../../assets/images/black.jpeg)"></div>
             </div>
-            <div class="col-6 col-md-8">
+            <div class="col-6 col-md-8" *ngIf="movieData">
                 <div class="movieTitle">
-                    <h1>Black Panther</h1>
-                    <h3>2017</h3>
-                    <h3>Action / Crime / Drama / Thriller</h3>
+                    <h1>{{ movieData.title }}</h1>
+                    <h3>{{ movieData.year }}</h3>
+                    <h3 >
+                        <span *ngFor="let genre of movieData.genres">{{ genre }} </span>
+                    </h3>
                     <h3><i class="fa fa-imdb"> 6.1</i></h3> 
                     
                 </div>
