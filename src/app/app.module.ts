@@ -17,6 +17,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { SingleviewComponent } from './components/singleview/singleview.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { SingleviewComponent } from './components/singleview/singleview.componen
     FooterComponent,
     HeaderComponent,
     LayoutComponent,
-    SingleviewComponent
+    SingleviewComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
