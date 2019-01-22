@@ -1,3 +1,66 @@
-<p>
-  profile works!
-</p>
+<div class="container">
+  <div class="row">
+      <div class="col-md-6 offset-md-3 p-4">
+          <div class="imageDivSquare" style="background: url(../../../../../assets/images/ant.jpg)"></div>
+      </div>
+    <div class="col-12 py-2 text-center">
+      <p><small> First Name:</small><strong> Sfiso</strong></p>
+      <p><small> First Name:</small> <strong> Wilson</strong></p>
+      <p><small> Username:</small> <strong> swilson</strong></p>
+      <div class="py-4 editInfo">
+        {{ submitted }}
+        <form [formGroup]='changeInfo' (ngSubmit)="onSubmit()" role="form">
+            <div class="form-group row">
+                <div class="col-sm-12 py-2">
+                  <input formControlName="first" type="text" class="form-control" placeholder="First Name" [ngClass]="{ 'is-invalid': submitted && f.first.errors }">
+                  <div *ngIf="submitted && f.first.errors" class="invalid-feedback">
+                      <div *ngIf="f.first.errors.required">First Name is required</div>
+                  </div>
+                </div>
+                <div class="col-sm-12 py-2">
+                  <input formControlName="last" type="text" class="form-control" placeholder="Last Name" [ngClass]="{ 'is-invalid': submitted && f.first.errors }" >
+                  <div *ngIf="submitted && f.last.errors" class="invalid-feedback">
+                      <div *ngIf="f.last.errors.required">Last Name is required</div>
+                  </div>
+                </div>
+                <div class="col-sm-12 py-2">
+                  <input formControlName="email" type="email" class="form-control" placeholder="Email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" >
+                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                      <div *ngIf="f.email.errors.required">Email is required</div>
+                  </div>
+                </div>
+                <div class="col-sm-12 py-2">
+                  <input formControlName="uid" type="text" class="form-control" placeholder="Username" [ngClass]="{ 'is-invalid': submitted && f.uid.errors }">
+                  <div *ngIf="submitted && f.uid.errors" class="invalid-feedback">
+                      <div *ngIf="f.uid.errors.required">Username is required</div>
+                      <div *ngIf="f.uid.errors.minlength">Username must be at least 6 characters</div>
+                  </div>
+                </div>
+                <div class="col-sm-12 py-2">
+                  <input formControlName="pwd" type="password" class="form-control" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f.pwd.errors }">
+                  <div *ngIf="submitted && f.pwd.errors" class="invalid-feedback">
+                      <div *ngIf="f.pwd.errors.required">Password is required</div>
+                      <div *ngIf="f.pwd.errors.minlength">Password must be at least 6 characters</div>
+                      <div *ngIf="f.pwd.errors.pattern">Password must contain each of these (Upper-case letter(s), Number(s), Lower-case letter(s))</div>
+                  </div>
+                </div>
+              </div>
+              <input type="button" class="btn btn-primary col-md-6 offset-md-6" value="Change Info">
+        </form>
+        <form [formGroup]='changePic' (ngSubmit)="onSubmit()" class="my-4">
+            <div class="form-group row">
+                <div class="col-sm-10">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input">
+                    <label class="custom-file-label">Choose file...</label>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <input type="submit" class="btn btn-primary" value="Change">
+                </div>
+              </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

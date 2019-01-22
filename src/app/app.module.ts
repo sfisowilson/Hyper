@@ -18,6 +18,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { SingleviewComponent } from './components/singleview/singleview.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { UsersComponent } from './components/users/users.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     HeaderComponent,
     LayoutComponent,
     SingleviewComponent,
-    ProfileComponent
+    ProfileComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +54,8 @@ import { ProfileComponent } from './components/profile/profile.component';
           { path : 'dashboard', component : DashboardComponent }
         ] },
     { path : 'stream', component : StreamComponent },
+    { path : 'profile', component : ProfileComponent },
+    { path : 'users', component : UsersComponent },
     { path : '**', component : NotfoundComponent }
   ])
   ],
@@ -59,3 +63,4 @@ import { ProfileComponent } from './components/profile/profile.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+ 
