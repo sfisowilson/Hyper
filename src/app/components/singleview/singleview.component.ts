@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { MovieDataService } from 'src/app/services/movie-data.service';
 
 @Component({
   selector: 'app-singleview',
@@ -12,20 +13,22 @@ export class SingleviewComponent implements OnInit {
   id: number;
   movieData: any;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, private data: MovieDataService) { }
 
   ngOnInit() {
+    // this.sub = this.route.params.subscribe(params => {
+    //   this.id = +params['id'];
+    //   console.log(this.id);
+    //   this.http.get<any>('http://localhost:5200/getMovieInfo?movieId=tt6857112').subscribe((res) => {
+    //     this.movieData = res;
+    //     console.log(this.movieData);
+    //   });
+    // });
 
-    this.sub = this.route.params.subscribe(params => {
-      this.id = +params['id'];
-      console.log(this.id);
-      this.http.get<any>('https://yts.am/api/v2/movie_details.json?movie_id=' + this.id + '&with_images=true&with_cast=true')
-      .subscribe((res) => {
-        this.movieData = res.data.movie;
-        console.log(this.movieData);
-      });
+    this.data.currentObj.subscribe(clipData => {
+      this.movieData = clipData;
+      console.log(this.movieData);
     });
-
   }
 
 }

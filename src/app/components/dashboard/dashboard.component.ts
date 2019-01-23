@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient} from '@angular/common/http';
 import { Router } from '@angular/router';
+import { MovieDataService } from 'src/app/services/movie-data.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,15 +13,18 @@ export class DashboardComponent implements OnInit {
   searchForm: FormGroup;
   submitted: boolean;
   movieList: any;
+  movieData: any;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) { }
+
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router, private data: MovieDataService) { }
 
   get f() { return this.searchForm.controls; }
 
   ngOnInit() {
-      this.http.get<any>('https://yts.am/api/v2/list_movies.json').subscribe((res) => {
+      this.http.get<any>('http://localhost:5200/getMovieInfo').subscribe((res) => {
         this.movieList = res.data.movies;
         console.log(this.movieList);
+        
       });
 
 
@@ -32,6 +36,8 @@ export class DashboardComponent implements OnInit {
       rating: [''],
       order: ['']
     });
+
+    // this.data.currentObj.subscribe(clipData => this.movieData = clipData)
   }
 
   onSubmit(): void {
@@ -55,6 +61,15 @@ export class DashboardComponent implements OnInit {
   }
 
   singleMovie( id: number ): void {
+    this.data.changeData(this.movieData);
+    for(var i = 0; i < this.movieList.length; i++)
+    {
+      if (this.movieList[i].id == id)
+      {
+        this.data.changeData(this.movieList[i]);
+        break;
+      }
+    }
     this.router.navigate(['singleview', id ]);
   }
 
