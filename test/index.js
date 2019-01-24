@@ -50,10 +50,24 @@ app.get('/getMovieInfo', function(req, res){
     orderBy: 'desc',
     withRtRatings: true
   }).then(results => {
-     res.send(results);
+    test(results)
+    .then(res => {
+      console.log(res);
+    })
   })
     .catch(err => console.error(err))
 });
+function test(results)
+{
+    const movies = results.data.movies
+      const promises = movies.map( async movie => {
+        return await imdb.getMovie(movie.imdb_code, function (movieData) {
+        movie.movieData = movieData;
+      });
+    });
+    return Promise.all(promises);
+}
+
 
 app.post('/api/posts', verifyToken, (req, res) => {  
     jwt.verify(req.token, 'secretkey', (err, authData) => {
