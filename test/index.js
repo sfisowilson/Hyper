@@ -126,27 +126,102 @@ app.post('/api/posts', verifyToken, (req, res) => {
   // NEW THINGS
   
   app.get('/testing', async function(req, res){
-      // const providers = TorrentSearchApi.getProviders();
       TorrentSearchApi.enablePublicProviders();
-      const torrents = await TorrentSearchApi.search('2018', 'Movies', 10);  
-      console.log('hello torrent providers');
-      // console.log(torrents[0]);
-      
+      const torrents = await TorrentSearchApi.search('2018', 'Movies', 2);
 
-      res.send("hello");
+      // scraping tittles
+      torrents.forEach(function(torrent_file){
+          let new_title = (titleExtract(torrent_file['title']));
+          torrent_file['title'] = new_title;
+          // console.log(new_title);
+        });
+      
+      // console.log('hello torrent providers');
+      // console.log(torrents);
+      const torrentData = testmix(torrents).catch(err => console.log(err));
+      console.log(testmix(torrents));
+      
+      // .then(async  movieList => {
+      //   await console.log(movieList);
+      // })
+      // res.send("hello");
 });
 
-
-//   function titleExtract(title){
-//     let bracket_match = title.match(/(.*?)[^(](\d\d\d\d)[^p]/);
-//     if (bracket_match){
-//         let name = bracket_match[1].replace(/\./g, " ");
-//         title = name + " (" + bracket_match[2] + ")";
-//     }
-//     var new_title = (title.match(/[^[)]*/))[0] + ")";
-
-//     return (new_title);
+// async function testmix(movies)
+// {
+//   return await Promise.all( movies.map( async (movie) => {
+//     await imdb.searchMovies(movie.title, function (moviesData) {
+//       movie.extra = moviesData[0];
+//       console.log(movie);         
+//       return movie;
+//     });
+//   }));
 // }
+  async function testmix(movies) {
+
+         for (movie of movies) {
+
+           console.log(movie.title);
+          let resp =  await imdb.searchMovies(movie.title);
+         let newjs = await resp.json();
+           console.log(newjs);
+       }
+        // return movies;
+      // return (Promise.map(movies, function (item) {
+      //   return imdb.searchMovies(item.title)
+      //       .then(function(results)
+      //       {
+      //         item.extra = results[0];
+      //         return item;
+      //       })
+      //       .catch(function (err) {
+      //         console.log(err);
+      //       });
+      // }));
+  }
+
+
+
+
+  function searchMovies(keyword, successCallback, errorCallback) {
+    var requestUrl = 'http://www.imdb.com/find?q=' + keyword + '&s=tt&ttype=ft&ref_=fn_ft';
+
+    utility.request(requestUrl, function ($) {
+        var movies = [];
+
+        $('div.findSection > table.findList tr').each(function () {
+            var innerText = $(this).text().trim()
+                , id = $(this).html().match(/(tt[\d]+)/)[0] || null
+                , year = innerText.match(/(\d{4})/g);
+
+            if (id !== null && year !== null) { // exclude movies that are being developed
+                movies.push({
+                    id: id,
+                    title: innerText.replace(/\(\d+\)/g, '').trim() || null,
+                    year: year[0] || null,
+                    primaryPhoto: $(this).find('img').attr('src') || null
+                });
+            }
+        });
+
+        return movies;
+    }, successCallback, errorCallback)
+}
+
+
+
+
+
+function titleExtract(title){
+    let bracket_match = title.match(/(.*?)[^(](\d\d\d\d)[^p]/);
+    if (bracket_match){
+        let name = bracket_match[1].replace(/\./g, " ");
+        title = name + " (" + bracket_match[2] + ")";
+    }
+    var new_title = (title.match(/[^[)]*/))[0] + ")";
+
+    return (new_title);
+}
 
 
 // async function makeMovieList(torrents){
