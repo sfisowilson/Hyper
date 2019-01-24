@@ -14,6 +14,7 @@
     "express": "^4.16.4",
     "imdb-node-api": "^0.1.0",
     "jsonwebtoken": "^8.4.0",
+    "torrent-search-api": "^2.0.4",
     "yts-api-pt": "^2.0.0"
   }
 }

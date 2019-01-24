@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   get f() { return this.searchForm.controls; }
 
   ngOnInit() {
-      this.http.get<any>('http://localhost:5200/getMovieInfo').subscribe((res) => {
+      this.http.get<any>('http://localhost:5200/testing').subscribe((res) => {
         this.movieList = res.data.movies;
         console.log(this.movieList);
         
