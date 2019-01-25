@@ -4,10 +4,9 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 var imdb = require('imdb-node-api');
-const YtsApi = require('yts-api-pt');
 const TorrentSearchApi = require('torrent-search-api');
-const utility = require('./node_modules/imdb-node-api/lib/utility.lib');
-
+const axios = require('axios');
+const util = require('util');
 
 var app = express();
 app.listen(5200, function(){
@@ -18,7 +17,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(cors());
 
-const yts = new YtsApi();
 
 app.get(function(req, res, next){
     console.log("hitting");
@@ -30,7 +28,7 @@ app.post('/test', function(req, res){
     res.send(JSON.stringify({status: 200}));
 });
 
-app.get('/getMovieInfo', function(req, res){
+// app.get('/getMovieInfo', function(req, res){
   // let movie_id = req.query.movieId;
   // imdb.getMovie(movie_id, function (movie) {
   //     console.log("test movie");
@@ -42,87 +40,7 @@ app.get('/getMovieInfo', function(req, res){
   // }, function(error) {
   //     console.error(error);
   // });
-
-  yts.getMovies({
-    limit: 20,
-    page: 2,
-    quality: 'All',
-    minimumRating: 0,
-    genre: 'action',
-    sortBy: 'date_added',
-    orderBy: 'desc',
-    withRtRatings: true
-  }).then(results => {
-    test(results)
-    .then(res => {
-      console.log(res);
-    })
-  })
-    .catch(err => console.error(err))
-});
-function test(results)
-{
-    const movies = results.data.movies
-      const promises = movies.map( async movie => {
-        return await imdb.getMovie(movie.imdb_code, function (movieData) {
-        movie.movieData = movieData;
-      });
-    });
-    return Promise.all(promises);
-}
-
-
-app.post('/api/posts', verifyToken, (req, res) => {  
-    jwt.verify(req.token, 'secretkey', (err, authData) => {
-      if(err) {
-        res.sendStatus(403);
-      } else {
-        res.json({
-          message: 'Post created...',
-          authData
-        });
-      }
-    });
-  });
-  
-  app.post('/api/login', (req, res) => {
-    // Mock user
-    const user = {
-      id: 1, 
-      username: 'brad',
-      email: 'brad@gmail.com'
-    }
-  
-    jwt.sign({user}, 'secretkey', { expiresIn: '30s' }, (err, token) => {
-      res.json({
-        token
-      });
-    });
-  });
-  
-  // FORMAT OF TOKEN
-  // Authorization: Bearer <access_token>
-  
-  // Verify Token
-  function verifyToken(req, res, next) {
-    // Get auth header value
-    const bearerHeader = req.headers['authorization'];
-    // Check if bearer is undefined
-    if(typeof bearerHeader !== 'undefined') {
-      // Split at the space
-      const bearer = bearerHeader.split(' ');
-      // Get token from array
-      const bearerToken = bearer[1];
-      // Set the token
-      req.token = bearerToken;
-      // Next middleware
-      next();
-    } else {
-      // Forbidden
-      res.sendStatus(403);
-    }
-  
-  }
+// });
 
 
   // NEW THINGS
@@ -145,154 +63,40 @@ app.post('/api/posts', verifyToken, (req, res) => {
    });
 
   app.get('/testing', async function(req, res){
-      // TorrentSearchApi.enablePublicProviders();
-      // const torrents = await TorrentSearchApi.search('2018', 'Movies', 2);
+      TorrentSearchApi.enableProvider('1337x');
+      const torrents = await TorrentSearchApi.search('2018', 'Movies', 10);
 
-      // // scraping tittles
-      // torrents.forEach(function(torrent_file){
-      //     let new_title = (titleExtract(torrent_file['title']));
-      //     torrent_file['title'] = new_title;
-      //     // console.log(new_title);
-      //   });
+      // scraping tittles
+        torrents.forEach(function(torrent_file){
+          let new_title = (titleExtract(torrent_file['title']));
+          torrent_file['title'] = new_title;
+        });
       
-      // console.log('hello torrent providers');
-      // const torrentData = testmix(torrents);
-      // console.log(testmix(torrents));
-      // testmix(torrents).
-      // then((x)=> console.log(x)).
-      // catch(err => console.log('error'));
-      
-      // .then(async  movieList => {
-      //   await console.log(movieList);
-      // })
-      // res.send("hello");
+      console.log('hello torrent providers');
+      var myObject = {},
+      promises = [];
 
-    //  const Test = await serialAsyncMap(torrents, searchMovies);
-    //  console.log('Test');
-    //  console.log(Test);
-    //   res.json(Test);
-  console.log("got request....");
-    yts.getMovies({
-    limit: 10,
-    page: 1,
-    quality: 'All',
-    minimumRating: 0,
-    genre: 'action',
-    sortBy: 'date_added',
-    orderBy: 'desc',
-    withRtRatings: true
-  }).then(results => {
-    console.log(results);
-       res.send(JSON.stringify(results));
-  })
-    .catch(err => console.error(err))
+      torrents.forEach(function(singleElement){
+        console.log(singleElement.title);
+        // myUrl = singleElement.webAddress;
+        promises.push(axios.get(`https://yts.am/api/v2/list_movies.json?limit=1&query_term=${singleElement.title}`))
+      });
+
+      axios.all(promises).then(axios.spread((...args) => {
+        console.log(args.length);
+        for (let i = 0; i < args.length; i++) {
+            myObject[i] = args[i];
+        }
+    })).then(()=> {
+      var i = 0;
+      torrents.forEach(function(movie){
+        console.log(myObject[i].data);
+        movie.yts = myObject[i++].data.data.movies;
+      });
+      // console.log(torrents);
+      res.send(JSON.stringify(torrents));
+    });
 });
-
-function serialAsyncMap(collection, fn) {
-
-  let results = [];
-  let promise = Promise.resolve();
-
-  for (let item of collection) {
-    promise = promise.then(() => {
-      return fn('test').then(result => {
-        console.log('rererereresults');
-        console.log(result);
-        results.push(result);
-      });
-    });
-  }
-  return promise.then((results) => {
-    return results;
-  });
-}
-  async function testmix(movie) {
-        imdb.searchMovies('xmen', function (movies) {
-            console.log(movies);
-        }, function(error) { 
-            console.error(error);
-        });
-  }
-
-      //    for (movie of movies) {
-
-      //      console.log(movie.title);
-      //     let resp =  await imdb.searchMovies(movie.title);
-      //    let newjs = await resp.json();
-      //      console.log(newjs);
-      //  }
-        // return movies;
-      // return (Promise.map(movies, function (item) {
-      //   return imdb.searchMovies(item.title)
-      //       .then(function(results)
-      //       {
-      //         item.extra = results[0];
-      //         return item;
-      //       })
-      //       .catch(function (err) {
-      //         console.log(err);
-      //       });
-      // }));
-  // }
-
-
-
-
-function searchMovies(keyword) {
-  
-  var requestUrl = 'http://www.imdb.com/find?q=' + keyword + '&s=tt&ttype=ft&ref_=fn_ft';
-  let results = [];
-  let promise = Promise.resolve();
-  
-  for (let item of collection) {
-    promise = promise.then(() => {
-      return fn(item).then(result => {
-        results.push(result);
-      });
-    });
-  }
-  return promise.then(() => {
-    return results;
-  });
-}
-
-  async function searchMovies(keyword) {
-    var requestUrl = 'http://www.imdb.com/find?q=' + keyword + '&s=tt&ttype=ft&ref_=fn_ft';
-
-    utility.request(requestUrl, async function ($) {
-        var movies = [];
-
-        $('div.findSection > table.findList tr').each(function () {
-
-          if (movies.length < 1)
-          {
-            var innerText = $(this).text().trim()
-                , id = $(this).html().match(/(tt[\d]+)/)[0] || null
-                , year = innerText.match(/(\d{4})/g);
-
-            if (id !== null && year !== null) { // exclude movies that are being developed
-                movies.push({
-                    id: id,
-                    title: innerText.replace(/\(\d+\)/g, '').trim() || null,
-                    year: year[0] || null,
-                    primaryPhoto: $(this).find('img').attr('src') || null
-                });
-            }
-          }
-        });
-        console.log('mivies--->');
-        console.log(movies);
-        return movies;
-
-    });
-     console.log('data');
-    //  console.log(data);
-
-    // return data;
-}
-
-
-
 
 
 function titleExtract(title){
@@ -307,90 +111,96 @@ function titleExtract(title){
 }
 
 
-// async function makeMovieList(torrents){
-//     var movie_list = {};
-//     var count = 1;
+async function makeMovieList(torrents, res){
+	var movie_list = {};
+	var count = 1;
+  const search = util.promisify(imdb.searchMovies);
 
-//     torrents.forEach(function(torrent_file){
-
-//         imdb.searchMovies(torrent_file['title'],
-//             function (movies) {
-
-//             movie = movies[0];
-
-//             // if movie in list check which is bigger seeds
-//             if (! (movie['id'] in movie_list) ||
-//                 ((movie['id'] in movie_list) && torrent_file['seeds'] >
-//                                                 movie_list[movie['id']]['torrent']['seeds'])
-//             ){
-//                 movie_list[movie['id']] = ({
-//                     video : movie ,
-//                     torrent : torrent_file
-//                 });
-//             }
-
-//             // when done log list
-//             if (++count == torrents.length){
-//                 console.log("finaly here -------", movie_list);
-//             }
-
-//         }, function(error) {
-//             console.error(error);
-//         });
-
-//     });
-
-//     //return (movie_list);
-// };
+	torrents.forEach( async function(torrent_file){
 
 
+    // async function callStat() {
+      const lookup = await search(torrent_file['title']);
+      console.log(lookup);
+      // movie = movies[0];
 
+			// if movie in list, check which is bigger seeds
+        //   if (! (movie['id'] in movie_list) ||
+        //   ((movie['id'] in movie_list) && torrent_file['seeds'] > 
+        //                   movie_list[movie['id']]['torrent']['seeds'])
+        // ){
+        //   movie_list[movie['id']] = ({
+        //     video : movie ,
+        //     torrent : torrent_file
+        //   });
+        // }
+    // }
 
-// function getMovieInfo(movie_id, res){
-//     imdb.getMovie(movie_id, function (movie) {
-//         console.log("test movie");
+		// imdb.searchMovies(torrent_file['title'], async function (movies) {
 
-//         // res.send(movie);
-//         // res.json(movie);
-//         // return (movie);
+		// 	movie = movies[0];
 
-//         console.log(movie);
-//     }, function(error) {
-//         console.error(error);
-//     });
-// }
+			// if movie in list, check which is bigger seeds
+			// if (! (movie['id'] in movie_list) ||
+			// 	((movie['id'] in movie_list) && torrent_file['seeds'] > 
+			// 									movie_list[movie['id']]['torrent']['seeds'])
+			// ){
+			// 	movie_list[movie['id']] = ({
+			// 		video : movie ,
+			// 		torrent : torrent_file
+			// 	});
+			// }
 
+			// when done making list: log list
+			// if (++count == torrents.length){
+			// 	console.log("finaly here -------", movie_list);
+      // }
+      // res.send('success');
 
-// /* GET home page. */
-// app.get('/',
-
-//     async function(req, res, next) {
+		// }, function(error) { 
+		// 	console.error(error);
+    // });
     
-//     console.log('start');
 
-//     let search_phrase = '2018'
-    
-//     // torrent fetch
-//     const TorrentSearchApi = require('torrent-search-api');
-//     TorrentSearchApi.enableProvider('1337x');
-//     const torrents = await TorrentSearchApi.search(search_phrase, 'Movies', 5);
-
-//     // scraping tittles
-//     torrents.forEach(function(torrent_file){
-//         // console.log( torrent_file['title']);
-//         let new_title = (titleExtract(torrent_file['title']));
-//         torrent_file['title'] = new_title;
-//     });
-//     // console.log("torrntes", torrents);
+  });
+  console.log('torrents');
+  // console.log(torrents);
+};
 
 
+app.get('/testing', 
+
+	async function(req, res, next) {
+	
+	console.log('start');
+
+	let search_phrase = '2018'
+	
+	// torrent fetch
+	TorrentSearchApi.enableProvider('1337x');
+	const torrents = await TorrentSearchApi.search(search_phrase, 'Movies', 5);
+
+	// scraping tittles
+	torrents.forEach(async function(torrent_file){
+		// console.log( torrent_file['title']);
+		let new_title = (titleExtract(torrent_file['title']));
+		torrent_file['title'] = new_title;
+		const magnet = await TorrentSearchApi.getMagnet(torrent_file);
+		// console.log('magnet: ', torrent_file['title'], ' link: ', magnet);
+		torrent_file['magnet'] = magnet;
+  });
+  
+
+	// console.log("torrntes", torrents);
 
 
-//     var list = await (makeMovieList(torrents,res));
-//     // await Promise.all(list).then(console.log("my lis : ", list));    
-//     console.log("---- final movie list: ", list);
 
 
-//     res.sendFile(path.join(__dirname + '/index2.html'));
-//     // res.render('index', { title: 'Best website' });    
-// });
+	makeMovieList(torrents,res);
+	// await Promise.all(list).then(console.log("my lis : ", list));	
+	// console.log("---- final movie list: ", list);
+
+
+	// res.sendFile(path.join(__dirname + '/index2.html'));
+	// res.render('index', { title: 'Best website' });	
+});

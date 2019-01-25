@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
       this.http.get<any>('http://localhost:5200/testing').subscribe((res) => {
-        this.movieList = res.data.movies;
+        this.movieList = res;
         console.log(this.movieList);
 
       });
@@ -63,17 +63,17 @@ export class DashboardComponent implements OnInit {
   singleMovie( id: number ): void {
     this.data.changeData(this.movieData);
     const links = [];
-    const str = {};
+    var str = {};
     for (let i = 0; i < this.movieList.length; i++) {
       if (this.movieList[i].id === id) {
-        str = {query: this.movieList[i].title};
-        this.http.post('http://localhost:5200/getlinks', str).subscribe((res) => {
-          // this.movieList = res.data.movies;
-          console.log(res);
-          const extra = this.movieList[i];
-          extra.extra = res;
-          this.data.changeData(extra);
-        });
+        // str = {query: this.movieList[i].title};
+        // this.http.post('http://localhost:5200/getlinks', str).subscribe((res) => {
+        //   // this.movieList = res.data.movies;
+        //   console.log(res);
+        //   const extra = this.movieList[i];
+        //   extra.extra = res;
+          this.data.changeData(this.movieList[i]);
+        // });
 
         break;
       }
