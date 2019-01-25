@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 var imdb = require('imdb-node-api');
 const YtsApi = require('yts-api-pt');
 const TorrentSearchApi = require('torrent-search-api');
+const utility = require('./node_modules/imdb-node-api/lib/utility.lib');
+
 
 var app = express();
 app.listen(5200, function(){
@@ -125,9 +127,10 @@ app.post('/api/posts', verifyToken, (req, res) => {
 
   // NEW THINGS
   
-  app.get('/testing', async function(req, res){
-      TorrentSearchApi.enablePublicProviders();
-      const torrents = await TorrentSearchApi.search('2018', 'Movies', 2);
+
+   app.post('/getlinks', async function(req, res){
+     TorrentSearchApi.enablePublicProviders();
+      const torrents = await TorrentSearchApi.search(req.body.query, 'Movies', 2);
 
       // scraping tittles
       torrents.forEach(function(torrent_file){
@@ -136,36 +139,88 @@ app.post('/api/posts', verifyToken, (req, res) => {
           // console.log(new_title);
         });
       
+      console.log(torrents);
+      console.log('hello torrent providers');
+       res.send(JSON.stringify(torrents));
+   });
+
+  app.get('/testing', async function(req, res){
+      // TorrentSearchApi.enablePublicProviders();
+      // const torrents = await TorrentSearchApi.search('2018', 'Movies', 2);
+
+      // // scraping tittles
+      // torrents.forEach(function(torrent_file){
+      //     let new_title = (titleExtract(torrent_file['title']));
+      //     torrent_file['title'] = new_title;
+      //     // console.log(new_title);
+      //   });
+      
       // console.log('hello torrent providers');
-      // console.log(torrents);
-      const torrentData = testmix(torrents).catch(err => console.log(err));
-      console.log(testmix(torrents));
+      // const torrentData = testmix(torrents);
+      // console.log(testmix(torrents));
+      // testmix(torrents).
+      // then((x)=> console.log(x)).
+      // catch(err => console.log('error'));
       
       // .then(async  movieList => {
       //   await console.log(movieList);
       // })
       // res.send("hello");
+
+    //  const Test = await serialAsyncMap(torrents, searchMovies);
+    //  console.log('Test');
+    //  console.log(Test);
+    //   res.json(Test);
+  console.log("got request....");
+    yts.getMovies({
+    limit: 10,
+    page: 1,
+    quality: 'All',
+    minimumRating: 0,
+    genre: 'action',
+    sortBy: 'date_added',
+    orderBy: 'desc',
+    withRtRatings: true
+  }).then(results => {
+    console.log(results);
+       res.send(JSON.stringify(results));
+  })
+    .catch(err => console.error(err))
 });
 
-// async function testmix(movies)
-// {
-//   return await Promise.all( movies.map( async (movie) => {
-//     await imdb.searchMovies(movie.title, function (moviesData) {
-//       movie.extra = moviesData[0];
-//       console.log(movie);         
-//       return movie;
-//     });
-//   }));
-// }
-  async function testmix(movies) {
+function serialAsyncMap(collection, fn) {
 
-         for (movie of movies) {
+  let results = [];
+  let promise = Promise.resolve();
 
-           console.log(movie.title);
-          let resp =  await imdb.searchMovies(movie.title);
-         let newjs = await resp.json();
-           console.log(newjs);
-       }
+  for (let item of collection) {
+    promise = promise.then(() => {
+      return fn('test').then(result => {
+        console.log('rererereresults');
+        console.log(result);
+        results.push(result);
+      });
+    });
+  }
+  return promise.then((results) => {
+    return results;
+  });
+}
+  async function testmix(movie) {
+        imdb.searchMovies('xmen', function (movies) {
+            console.log(movies);
+        }, function(error) { 
+            console.error(error);
+        });
+  }
+
+      //    for (movie of movies) {
+
+      //      console.log(movie.title);
+      //     let resp =  await imdb.searchMovies(movie.title);
+      //    let newjs = await resp.json();
+      //      console.log(newjs);
+      //  }
         // return movies;
       // return (Promise.map(movies, function (item) {
       //   return imdb.searchMovies(item.title)
@@ -178,18 +233,39 @@ app.post('/api/posts', verifyToken, (req, res) => {
       //         console.log(err);
       //       });
       // }));
+  // }
+
+
+
+
+function searchMovies(keyword) {
+  
+  var requestUrl = 'http://www.imdb.com/find?q=' + keyword + '&s=tt&ttype=ft&ref_=fn_ft';
+  let results = [];
+  let promise = Promise.resolve();
+  
+  for (let item of collection) {
+    promise = promise.then(() => {
+      return fn(item).then(result => {
+        results.push(result);
+      });
+    });
   }
+  return promise.then(() => {
+    return results;
+  });
+}
 
-
-
-
-  function searchMovies(keyword, successCallback, errorCallback) {
+  async function searchMovies(keyword) {
     var requestUrl = 'http://www.imdb.com/find?q=' + keyword + '&s=tt&ttype=ft&ref_=fn_ft';
 
-    utility.request(requestUrl, function ($) {
+    utility.request(requestUrl, async function ($) {
         var movies = [];
 
         $('div.findSection > table.findList tr').each(function () {
+
+          if (movies.length < 1)
+          {
             var innerText = $(this).text().trim()
                 , id = $(this).html().match(/(tt[\d]+)/)[0] || null
                 , year = innerText.match(/(\d{4})/g);
@@ -202,10 +278,17 @@ app.post('/api/posts', verifyToken, (req, res) => {
                     primaryPhoto: $(this).find('img').attr('src') || null
                 });
             }
+          }
         });
-
+        console.log('mivies--->');
+        console.log(movies);
         return movies;
-    }, successCallback, errorCallback)
+
+    });
+     console.log('data');
+    //  console.log(data);
+
+    // return data;
 }
 
 
