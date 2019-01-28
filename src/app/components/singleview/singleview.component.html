@@ -3,29 +3,35 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-4">
-                <div class="imageDivBackground" [style.background-image]="'url(' + movieData.large_cover_image + ')'"></div>
+                <div class="imageDivBackground" [style.background-image]="'url(' +  movieData?.yts[0]?.large_cover_image + ')'"></div>
             </div>
             <div class="col-12 col-md-8" *ngIf="movieData">
                 <div class="movieTitle">
-                    <h1>{{ movieData.title }}</h1>
-                    <h3>{{ movieData.year }}</h3>
+                    <h1>{{ movieData.yts[0]?.title }}</h1>
+                    <h3>{{ movieData.yts[0]?.year }}</h3>
+                    <h3>{{ movieData.yts[0]?.mpa_rating }}</h3>
                     <h3 >
-                        <span *ngFor="let genre of movieData.genres">{{ genre }} </span>
+                        <span *ngFor="let genre of movieData.yts[0]?.genres">{{ genre }} </span>
                     </h3>
-                    <h3 *ngIf="movieData.rating"><i class="fa fa-imdb"> {{movieData.rating}}</i></h3>
+                    <h3><i class="fa fa-imdb"> {{movieData.yts[0]?.rating}}</i></h3>
                     
                 </div>
             </div>
             <div class="col-12 col-md-8 py-4">
                 <h2>Synopsis</h2>
                 <p>
-                    {{movieData.description_full}}
+                    {{ movieData?.yts[0]?.description_full}}
                 </p>
             </div>
             <div class="col-12 col-md-4 py-4">
-                <h3>Director</h3>
+                <h2>Official Trailer</h2>
+                <iframe width="100%"
+                    [src]="trailer"
+                    frameborder="0" allowfullscreen>
+                </iframe>
+                <!-- <h3>Director</h3>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{{movieData.director}}</li>
+                    <li class="list-group-item" ng-if='movieData.director != undefined'>{{movieData.yts[0]?.director}}</li>
                 </ul>
                 <h3>Cast</h3>
                 <ul class="list-group list-group-flush">
@@ -34,7 +40,7 @@
                     <li class="list-group-item">Morbi leo risus</li>
                     <li class="list-group-item">Porta ac consectetur ac</li>
                     <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
+                </ul> -->
             </div>
             <div id="comments" class="col-12 py-4">
                 <h3 class="text-center comments">Comments</h3>

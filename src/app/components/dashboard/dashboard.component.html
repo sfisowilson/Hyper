@@ -84,9 +84,13 @@
 				</div>
 		</form>
 		<div class="row py-4">
+			<div class="col-12" *ngIf="!movieList">
+				<div class="loader"></div>
+			</div>
+			
 			<div class=" col-6 col-md-4 col-lg-3 mb-4 movieThumb" *ngFor="let oneMovie of movieList">
-				{{ !oneMovie?.yts[0]?.imdb_code }}
-				<div class="imageDivBackground" attr.data-movieId="{{ oneMovie.id }}" (click)="singleMovie(oneMovie.id)" [style.background-image]="'url(' + oneMovie?.yts[0]?.large_cover_image + ')'"></div>
+				{{ oneMovie?.yts[0]?.imdb_code }}
+				<div class="imageDivBackground" attr.data-movieId="{{ oneMovie?.yts[0]?.imdb_code }}" (click)="singleMovie( oneMovie?.yts[0]?.imdb_code )" [style.background-image]="'url(' + oneMovie?.yts[0]?.large_cover_image + ')'"></div>
 				
 				<div class="info text-center">
 					<strong>{{ oneMovie.title }}</strong>

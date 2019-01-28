@@ -61,11 +61,13 @@ export class DashboardComponent implements OnInit {
   }
 
   singleMovie( id: number ): void {
-    this.data.changeData(this.movieData);
-    const links = [];
-    var str = {};
+    console.log('correct function' + id);
+    // this.data.changeData(this.movieData);
+    // const links = [];
+    // var str = {};
+    console.log(this.movieList);
     for (let i = 0; i < this.movieList.length; i++) {
-      if (this.movieList[i].id === id) {
+      if (this.movieList[i].yts[0].imdb_code === id) {
         // str = {query: this.movieList[i].title};
         // this.http.post('http://localhost:5200/getlinks', str).subscribe((res) => {
         //   // this.movieList = res.data.movies;
@@ -78,7 +80,7 @@ export class DashboardComponent implements OnInit {
         break;
       }
     }
-    this.router.navigate(['singleview', id ]);
+    this.router.navigate([`singleview\/${id}`]);
   }
 
 }

@@ -3,7 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ScrollDispatchModule} from '@angular/cdk/scrolling';
+
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +22,10 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { SingleviewComponent } from './components/singleview/singleview.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { UsersComponent } from './components/users/users.component';
+
+import {
+  AuthGuardService as AuthGuard
+} from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -39,23 +46,20 @@ import { UsersComponent } from './components/users/users.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ScrollDispatchModule,
     FormsModule,
     NgbModule,
     HttpClientModule,
-    RouterModule.forRoot([    
-      
-      { path : '',
-        children: [
-          // /sifiso
-          { path : '', component : UserComponent },
-          // /sifiso/login
-          { path : 'login', component : LoginComponent },
-          { path : 'singleview/:id', component : SingleviewComponent },
-          { path : 'dashboard', component : DashboardComponent }
-        ] },
-    { path : 'stream', component : StreamComponent },
-    { path : 'profile', component : ProfileComponent },
-    { path : 'users', component : UsersComponent },
+    RouterModule.forRoot([
+
+    { path : '', component : UserComponent },
+    { path : 'login', component : LoginComponent },
+    { path : 'dashboard', component : DashboardComponent},
+    { path : 'singleview/:id', component : SingleviewComponent},
+    { path : 'stream', component : StreamComponent, canActivate: [AuthGuard] },
+    { path : 'profile', component : ProfileComponent, canActivate: [AuthGuard] },
+    { path : 'users', component : UsersComponent, canActivate: [AuthGuard] },
     { path : '**', component : NotfoundComponent }
   ])
   ],
@@ -63,4 +67,3 @@ import { UsersComponent } from './components/users/users.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
- 
