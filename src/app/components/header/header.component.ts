@@ -12,10 +12,10 @@ export class HeaderComponent implements OnInit {
   link:string;
 
   constructor() {
-    this.currentURL = window.location.href.split('/');
-    this.action = (this.currentURL[3] == '') ? ' Sign in' : 'Register';
-    this.link = (this.currentURL[3] == '') ? 'login' : '';
-    console.log(this.action);
+    // this.currentURL = window.location.href.split('/');
+    // this.action = (this.currentURL[3] == '') ? ' Sign in' : 'Register';
+    // this.link = (this.currentURL[3] == '') ? 'login' : '';
+    // console.log(this.action);
   }
 
   ngOnInit() {

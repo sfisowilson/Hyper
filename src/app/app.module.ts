@@ -57,9 +57,9 @@ import {
     { path : 'login', component : LoginComponent },
     { path : 'dashboard', component : DashboardComponent},
     { path : 'singleview/:id', component : SingleviewComponent},
-    { path : 'stream', component : StreamComponent, canActivate: [AuthGuard] },
-    { path : 'profile', component : ProfileComponent, canActivate: [AuthGuard] },
-    { path : 'users', component : UsersComponent, canActivate: [AuthGuard] },
+    { path : 'stream', component : StreamComponent},
+    { path : 'profile', component : ProfileComponent},
+    { path : 'users', component : UsersComponent},
     { path : '**', component : NotfoundComponent }
   ])
   ],

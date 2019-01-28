@@ -45,7 +45,46 @@ app.post('/test', function(req, res){
 
   // NEW THINGS
   
+  app.post('/movieSearch', async (req, res) => {
+      TorrentSearchApi.enableProvider('1337x');
+      const torrents = await TorrentSearchApi.search(req.body.title, 'Movies', 1);
 
+      // scraping tittles
+        torrents.forEach(function(torrent_file){
+          let new_title = (titleExtract(torrent_file['title']));
+          torrent_file['title'] = new_title;
+        });
+        res.send(JSON.stringify(torrents));
+  })
+  app.get('/movieInfo/:id', (req, res) => {
+      // console.log(req.params.id);
+    axios.get(`https://yts.am/api/v2/list_movies.json?limit=1&query_term=${req.params.id}`)
+    .then( async yts => {
+      // console.log(yts);
+      
+      TorrentSearchApi.enableProvider('1337x');
+      var torrents = await TorrentSearchApi.search(yts.data.data.movies[0].title, 'Movies', 1);
+      torrents = torrents[0];
+      console.log(torrents);
+  
+
+          let new_title = (titleExtract(torrents['title']));
+          torrents['title'] = new_title;
+        torrents.yts = yts.data.data.movies[0];
+        // console.log(torrents);
+        res.send(JSON.stringify(torrents));
+    })
+    .catch(err => console.log(err))
+    // TorrentSearchApi.enableProvider('1337x');
+    // const torrents = await TorrentSearchApi.search(req.body.title, 'Movies', 1);
+
+    // // scraping tittles
+    //   torrents.forEach(function(torrent_file){
+    //     let new_title = (titleExtract(torrent_file['title']));
+    //     torrent_file['title'] = new_title;
+    //   });
+    //   res.send(JSON.stringify(torrents));
+})
    app.post('/getlinks', async function(req, res){
      TorrentSearchApi.enablePublicProviders();
       const torrents = await TorrentSearchApi.search(req.body.query, 'Movies', 2);
